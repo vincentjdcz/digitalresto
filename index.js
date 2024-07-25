@@ -3,6 +3,7 @@ require("dotenv").config(); // parses contents of .env file, and assigns the val
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes/routes");
+const cors = require('cors');
 
 const mongoString = process.env.DATABASE_URL; //get the mongoDB connection string from our .env file
 
@@ -21,6 +22,7 @@ database.once("connected", () => {
 
 const app = express();
 
+app.use(cors());
 app.use(express.json()); //when receiving req's with a JSON payload, parse the payload and populate the req.body property with the parsed object
 app.use("/api", routes); //use the endpoints defined in routes to handle requests going to this endpoints, starting with /api
 app.listen(3000, () => {
